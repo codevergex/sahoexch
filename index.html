@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SahoExch UPI QR Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #87CEEB;
+            padding: 20px;
+            max-width: 500px;
+            margin: auto;
+            text-align: center;
+        }
+        input, select, button {
+            padding: 10px;
+            width: 100%;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        #qrcode {
+            margin-top: 20px;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        .whatsapp-float img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h2>SahoExch UPI QR Generator</h2>
+    <label>Select UPI ID:</label>
+    <select id="upiSelector">
+        <option value="RANDOM">🔀 Random (Auto)</option>
+        <option value="indianrafiq00@oksbi">indianrafiq00@oksbi</option>
+        <option value="afsarcity96@oksbi">afsarcity96@oksbi</option>
+        <option value="9830250952@ptyes">9830250952@ptyes</option>
+        <option value="8690169575@ptyes">8690169575@ptyes</option>
+        <option value="6291461661@ptyes">6291461661@ptyes</option>
+        <option value="dharmendracsb@okicici">dharmendracsb@okicici</option>
+        <option value="mdmdnesar39@okaxis">mdmdnesar39@okaxis</option>
+    </select>
+    <label>Amount (INR):</label>
+    <input type="number" id="amount" placeholder="Enter amount" />
+    <label>Order/Note:</label>
+    <input type="text" id="note" placeholder="Enter order note or description" />
+    <button onclick="generateQR()">Generate QR Code</button>
+    <div id="qrcode"></div>
+
+    <a href="https://wa.me/919599728914" class="whatsapp-float" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Support">
+    </a>
+
+    <script>
+        function generateQR() {
+            const upis = [
+                "indianrafiq00@oksbi", "afsarcity96@oksbi", "9830250952@ptyes",
+                "8690169575@ptyes", "6291461661@ptyes", "dharmendracsb@okicici",
+                "mdmdnesar39@okaxis"
+            ];
+            let upi = document.getElementById("upiSelector").value;
+            const amount = document.getElementById("amount").value;
+            const note = document.getElementById("note").value;
+
+            if (upi === "RANDOM") {
+                upi = upis[Math.floor(Math.random() * upis.length)];
+            }
+
+            const upiUrl = `upi://pay?pa=${upi}&pn=SahoExch&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+            document.getElementById("qrcode").innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), upiUrl);
+        }
+    </script>
+</body>
+</html>
