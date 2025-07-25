@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dynamic UPI QR Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e6f2ff;
+      padding: 20px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    img.logo {
+      width: 120px;
+      margin: 10px 0 20px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    select, input, button {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+      margin: 10px auto;
+      display: block;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    #qrcode {
+      margin-top: 20px;
+    }
+    .whatsapp-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+    .whatsapp-icon img {
+      width: 50px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <img src="logo.png" alt="Business Logo" class="logo" />
+  <h2>Dynamic UPI QR Generator</h2>
+  <label for="upiSelector">Select UPI ID:</label>
+  <select id="upiSelector">
+    <option value="RANDOM">🔀 Random (Auto)</option>
+    <option value="indianrafiq00@oksbi">indianrafiq00@oksbi</option>
+    <option value="afsarcity96@oksbi">afsarcity96@oksbi</option>
+    <option value="9830250952@ptyes">9830250952@ptyes</option>
+    <option value="8690169575@ptyes">8690169575@ptyes</option>
+    <option value="6291461661@ptyes">6291461661@ptyes</option>
+    <option value="dharmendracsb@okicici">dharmendracsb@okicici</option>
+    <option value="mdmdnesar39@okaxis">mdmdnesar39@okaxis</option>
+  </select>
+
+  <label>Amount (INR):</label>
+  <input type="number" id="amount" placeholder="Enter amount" />
+
+  <label>Order/Note:</label>
+  <input type="text" id="note" placeholder="Enter note or description" />
+
+  <button onclick="generateQR()">Generate QR Code</button>
+
+  <div id="qrcode"></div>
+
+  <a class="whatsapp-icon" href="https://wa.me/919599728914" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat on WhatsApp">
+  </a>
+
+  <script>
+    const upiList = [
+      "indianrafiq00@oksbi",
+      "afsarcity96@oksbi",
+      "9830250952@ptyes",
+      "8690169575@ptyes",
+      "6291461661@ptyes",
+      "dharmendracsb@okicici",
+      "mdmdnesar39@okaxis"
+    ];
+
+    function generateQR() {
+      let selected = document.getElementById("upiSelector").value;
+      if (selected === "RANDOM") {
+        selected = upiList[Math.floor(Math.random() * upiList.length)];
+      }
+      const amount = document.getElementById("amount").value;
+      const note = document.getElementById("note").value;
+      const upiUrl = `upi://pay?pa=${selected}&pn=SahoExch&am=${amount}&cu=INR&tn=${note}`;
+
+      document.getElementById("qrcode").innerHTML = "";
+      new QRCode(document.getElementById("qrcode"), {
+        text: upiUrl,
+        width: 256,
+        height: 256
+      });
+    }
+  </script>
+</body>
+</html>
